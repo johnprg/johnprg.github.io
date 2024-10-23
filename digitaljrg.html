@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Integration</title>
+    <script src="https://hiimpria.ai/pria-sdk.js"></script>
+</head>
+<body>
+    <h1>Chat with Digital JRG</h1>
+    <div id="pria-chat-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            PriaSDK.init({
+                publicId: "b52047f0-a14f-4bfd-a3ed-7d9226379ed4",  // Your Public ID
+                botName: "Digital JRG",  // Bot name set to Digital JRG
+                theme: "light",          // You can switch to "dark" or other available themes
+                welcomeMessage: "How can I assist you today?",  // Customize welcome message
+            });
+
+            // Listen for the 'messageReceived' event
+            PriaSDK.on("messageReceived", function(data) {
+                console.log("Received message:", data.message);
+            });
+
+            // Programmatically send a message to the chatbot
+            PriaSDK.sendMessage("Hello!");
+
+            // Show the chat widget manually
+            PriaSDK.show();
+        });
+    </script>
+</body>
+</html>
