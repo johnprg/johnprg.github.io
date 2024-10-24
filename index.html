@@ -12,7 +12,7 @@
 
     <script>
         // Ensure everything is fully loaded before attempting to initialize PriaSDK
-        window.onload = function() {
+        window.onload = function initializePriaSDK() {
             // Check if PriaSDK is properly loaded
             if (typeof PriaSDK !== 'undefined') {
                 PriaSDK.init({
@@ -23,6 +23,7 @@
                 });
             } else {
                 console.error("PriaSDK is not defined. Ensure the SDK script is loaded correctly.");
+                setTimeout(initializePriaSDK, 100); // Check again in 100ms
             }
         };
     </script>
