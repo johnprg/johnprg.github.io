@@ -1,32 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Integration</title>
-    <script src="https://hiimpria.ai/pria-sdk.js"></script> <!-- Ensure this URL is correct -->
-</head>
-<body>
-    <h1>Welcome to My Website</h1>
-    <div id="pria-chat-container"></div>
+<script type='text/javascript'>
+function loadSdkOver(u) {
+    var displayOptions={
+        fullScreen: false, // True for expanded in full screen
+        openOnLoad: false, // True to open Pria immediately when loaded 
+        buttonWidth: '80px', // Size of the button containing the Pria Logo
+        buttonPosition: 'fixed', // Determine the position of the button (fixed, relative, sticky)
+        buttonPositionRight: '20px', // Position of the button relative to the right edge of the screen
+        buttonPositionBottom: '20px', // Position of the button relative to the bottom edge of the screen
+        priaContainerId: '', // Id of the container receiving pria window (default empty uses BODY)
+        buttonContainerId: '', // Id of the container receiving the button (default empty uses BODY)
+    }
+	const pictureUrl= (window?.coPriaIconUrl || 'https://learning.praxislxp.com/praxis/david_praxis-ai_com/wp-content/uploads/sites/47/2024/06/John-Headshot.png')
+	const publicId = (window?.coPriaInstanceId || 'b52047f0-a14f-4bfd-a3ed-7d9226379ed4')
 
-    <script>
-        // Ensure everything is fully loaded before attempting to initialize PriaSDK
-        window.onload = function initializePriaSDK() {
-            // Check if PriaSDK is properly loaded
-            if (typeof PriaSDK !== 'undefined') {
-                PriaSDK.init({
-                    publicId: "b52047f0-a14f-4bfd-a3ed-7d9226379ed4",  // Your Public ID
-                    botName: "Digital JRG",  // Bot name set to Digital JRG
-                    theme: "light",          // You can switch to "dark" or other available themes
-                    welcomeMessage: "How can I assist you today?",  // Customize welcome message
-                });
-            } else {
-                console.error("PriaSDK is not defined. Ensure the SDK script is loaded correctly.");
-                setTimeout(initializePriaSDK, 100); // Check again in 100ms
-            }
+    const script = document.createElement('script');
+
+    script.src = u+"/pria-sdk.js";
+    script.async = true;
+    script.onload = function(){
+        if (typeof(window.priasdk)==='function'){
+        
+            // user identity
+            let user = typeof(window.authUser)==='object' ? {...window.authUser} :
+            {
+                email: "user@email.com",
+                profilename: "User Name",
+                profilepicture: "https://cdn.com/images/user_profile.png",
+                userid: 1,   /* User Id */
+                usertype: 4, /* User Type 1: user, 2:mentor 3:reporter 4:admin */
+                roleid: 1,   /* Course Id */
+                rolename: "Course", /* Course Name */
+                partnerid: 1, /* Customer Id (optional) */ 
+                partnername: "Partner", /* Customer Name (optional) */ 
+                lticontextid : document.location.href, /* Placement of Pria */
+            };
+
+            window.priasdk(u, user, publicId, pictureUrl, displayOptions);
         };
-    </script>
-</body>
-</html>
+    };
+    script.onerror = (err) => {
+		console.log("Failed to embed pria", err)
+	};
+
+    document.body.appendChild(script);
+}
+window.addEventListener("DOMContentLoaded", (event) => {
+    loadSdkOver('https://hiimpria.ai');
+});
+</script>
 
